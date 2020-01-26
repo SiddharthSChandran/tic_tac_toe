@@ -1,135 +1,33 @@
 # tic_tac_toe
 ________________________________________________________________
-#include <iostream>
-using namespace std;
-void boarddisplay(char board[]);
-bool correctrange(int cell);
-bool cellempty(int cell, char board[]);
-void turnchange(char &turn);
-bool three(char turn, char board[]);
-bool threerow(char turn, char board[]);
-bool threecolumn(char turn, char board[]);
-bool threediagonal(char turn, char board[]);
-struct Node {
-   int movenum;
-   char board[9];
-   Node *nextPtr;
-};
-void displayList( Node *head)
-{
-   Node *tempPtr = head;
-   cout << "\n List contains: "<<endl;
-   while( tempPtr != NULL) {
-      boarddisplay(tempPtr->board);
-	  cout<<"Move Number: "<<tempPtr->movenum<<endl<<endl;
-      tempPtr = tempPtr->nextPtr;
-   }
-   cout << "\n\n";
-}
-int main() {
-	char board[9];
-	for(int i = 0; i < 9; i++)
-		board[i] = ' ';
-	
-	Node *head = NULL; 
-    Node *tempPtr;
-	int movenum = 0;
-	char turn = 'X';
-	int cell = 0;
-	boarddisplay(board);
-	while(movenum < 9) {
-		displayList(head);
-		cout<<"*****************************"<<endl;
-		cout<<"Move number: "<<movenum<<endl;
-		cout << "TURN: "<< turn << " make your move: ";
-		cin >> cell; 
-		if(correctrange(cell)) { 
-			if(cellempty(cell-1, board)){
-				board[cell-1] = turn;
-				if(three(turn, board)) {
-boarddisplay(board);
-					cout << "Congratulations player "<<turn<< " You win!!";
-					cin >> cell; 
-					return 1;
-				}
-				tempPtr = new Node;
-				tempPtr->movenum = movenum; 
-				for(int i=0;i<9;i++) { 			
-tempPtr->board[i]=board[i];
-						}
-				tempPtr->nextPtr = head;
-				head = tempPtr; 
-				movenum++; 
-				turnchange(turn);
-				
-				}
-			else { 
-			cout << "Sorry...cell "<< cell << " has already been used, try again: " << endl;
-			}
-		}
-		else {
-			cout << "Sorry...cell "<< cell << " is outside the range 1-9, try again: " << endl;
-		}
-	}
-	cout<<"Game Ended: No Winners";
-	cin >>cell;
-	return 1;
-}
-void boarddisplay(char board[]) {
-	cout << " ___   ___   ___ "<<endl;
-	cout << "| "<<board[0]<<" |"<<" "<< "| "<< board[1]<<" |"<<" "<< "| "<< board[2]<<" |"<<endl;
-	cout << "|___| |___| |___| "<<endl;
-	cout << " ___   ___   ___ "<<endl;
-	cout << "| "<<board[3]<<" |"<<" "<< "| "<< board[4]<<" |"<<" "<< "| "<< board[5]<<" |"<<endl;
-	cout << "|___| |___| |___| "<<endl;
-	cout << " ___   ___   ___ "<<endl;
-	cout << "| "<<board[6]<<" |"<<" "<< "| "<< board[7]<<" |"<<" "<< "| "<< board[8]<<" |"<<endl;
-	cout << "|___| |___| |___| "<<endl;
-}
-bool correctrange(int cell) {
-	if(cell >= 1 && cell <= 9)
-		return true;
-	else 
-		return false;
-}
-bool cellempty(int cell, char  board[]) {
-	if(board[cell]!=' ')
-		return false;
-	else 
-		return true;
-}
-void turnchange(char &turn) {
-	if(turn == 'X')
-		turn = 'O';
-	else
-		turn = 'X';}
+The tic-tac-toe game is played on a 3x3 grid the game is played by two players, who take turns. The first player marks moves with a cross, the second with a circle. The player who has formed a horizontal, vertical, or diagonal sequence of three marks wins. The program draws the game board, ask the user for the coordinates of the next mark, change the players after every successful move, and pronounces the winner. 
 
-bool three(char turn, char board[]) {
-	if(threerow(turn, board) || threecolumn(turn,board) || threediagonal(turn,board))
-		return true;
-	else
-		return false;
-}
-bool threerow(char turn, char board[]) {
-	if((board[0] == turn && board[1] == turn && board[2] == turn) ||
-	   (board[3] == turn && board[4] == turn && board[5] == turn) ||
-	   (board[6] == turn && board[7] == turn && board[8] == turn))
-	   return true;
-	else 
-		return false;
-}
-bool threecolumn(char turn, char board[]) {
-	if((board[0] == turn && board[3] == turn && board[6] == turn) ||
-	   (board[1] == turn && board[4] == turn && board[7] == turn) ||
-	   (board[2] == turn && board[5] == turn && board[8] == turn))
-	   return true;
-	else 
-		return false;
-}
-bool threediagonal(char turn, char board[]) {
-	if((board[0] == turn && board[4] == turn && board[8] == turn) ||
-	   (board[2] == turn && board[4] == turn && board[6] == turn))
-	   return true;
-	else 
-		return false;
-}
+To implement this usually data structures like one dimensional and two dimensional arrays are used. We try to implement it using linked lists.
+
+ALGORITHM
+____________________________________________________________________
+1.We define a structure node containing the character stored inside the board for each turn as an X or  an O. It also contains a next pointer to access the next element in the linked list.
+
+2.Then we define the functions.
+
+3.Then we start the main part of the program by initializing the board elements to NULL and the head of the linked list to NULL.
+The move number is initialized to zero and the turn is set to the first player .i.e X’s turn.
+
+4.A while loop is executed for 9 times as that is the maximum number of times moves can be made in a 3X3 tic tac toe. At the beginning of while loop we put the display function to display each turn. 
+
+5.Inside the loop we ask for each time the move number and the turn and the turn is stored in the array embedded in the structure.
+
+6.For each input we perform a check.
+
+7.After that the linked list comes into play. 
+
+8.We define a node tempptr and assign it’s elements like the turn and the movenumber. 
+
+9.It is then assigned to head.
+
+10.Move number is incremented by 1 and the function to change turn  is invoked.
+
+11 . If there is a winner within the 9 moves the program displays the player turn and calls them as winner.
+
+12. Else it says no winner and ends the program.
+
